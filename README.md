@@ -1,5 +1,5 @@
 **Portfolio Website**
-# 🚀 [Your Name] - Portfolio Website
+# 🚀  Portfolio Website
 
 A modern, fully responsive **developer portfolio** showcasing my projects, skills, and experience as a **Full Stack Developer**.
 ## 🌐 Live Demo  

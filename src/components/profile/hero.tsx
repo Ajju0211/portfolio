@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-
+import Image from 'next/image';
 export default function Hero(): ReactElement {
   return (
     <section id="hero" className="w-full">
@@ -16,9 +16,12 @@ export default function Hero(): ReactElement {
         </div>
         <div>
           <div className="rounded-full overflow-hidden h-28 w-28">
-            <img
-              className=" h-auto grayscale rounded-full hover:grayscale-0 hover:scale-105 transition duration-300"
-              src="ajay.jpg"
+            <Image
+              className=" h-auto grayscale w-auto rounded-full hover:grayscale-0 hover:scale-105 transition duration-300"
+              alt="profile photo"
+              src="/ajay.jpg"
+              width={400}
+              height={400}
             />
           </div>
         </div>

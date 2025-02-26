@@ -11,7 +11,7 @@ export default function Header() {
         </div>
         <div className="flex items-center justify-center gap-2">
          |
-          <span className="uppercase cursor-pointer ">Project</span>
+          {/* <span className="uppercase cursor-pointer ">Project</span> */}
         </div>
       </div>
       <ModeToggle />

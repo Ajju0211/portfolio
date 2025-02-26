@@ -1,6 +1,7 @@
 "use client";
 import projects from "./constance";
 import { FaNodeJs, FaReact } from "react-icons/fa";
+import Image from 'next/image';
 import {
   SiMongodb,
   SiExpress,
@@ -59,9 +60,11 @@ const ProjectList: React.FC = () => {
                   handleRedirect(project.link);
                 }}
               >
-                <img
+                <Image
                   src={project.img}
                   alt={project.title}
+                  width={500}
+                  height={300}
                   className="w-full h-50 object-cover transition-transform duration-300 hover:scale-102 rounded-[10px]"
                 />
                 <div className="flex flex-col items-center justify-center w-full">

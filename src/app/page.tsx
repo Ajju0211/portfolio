@@ -7,7 +7,6 @@ import ProjectList from "@/components/profile/projects";
 import Technologies from "@/components/profile/technologies";
 import Education from "@/components/profile/education";
 import Footer from "@/components/profile/footer";
-import { MdOpacity } from "react-icons/md";
 export default function Home() {
   return (
     <motion.div

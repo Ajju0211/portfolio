@@ -1,4 +1,4 @@
-import { FaNodeJs, FaReact, FaDocker, FaJava, FaPython, FaDatabase } from "react-icons/fa";
+import { FaNodeJs, FaReact, FaDocker, FaJava, FaPython } from "react-icons/fa";
 import { SiMongodb, SiJavascript, SiCss3, SiExpress, SiSocketdotio, SiWebrtc, SiOpenai, SiReact, SiTypescript, SiNextdotjs, SiMysql, SiPostgresql, SiCplusplus } from "react-icons/si";
 
 const techStack = [

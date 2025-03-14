@@ -5,14 +5,14 @@ const projects = [
       title: "Chat Web App",
       description: "A real-time chat app with authentication.",
       techStack: ["React", "JavaScript", "Express", "Socket IO", "MongoDB", "WebRTC", "NodeJS"],
-      link: "https://ai-hubx.up.railway.app",
+      link: "https://full-stack-chat-website.onrender.com/login",
     },
     {
       img: "/AI-hubX.png",
       title: "AI-HubX",
       description: "An AI-powered platform for text-to-image.",
       techStack: ["React", "MongoDB", "Express", "NodeJS", "ChatGPT", "Deepseek"],
-      link: "https://inevoai.netlify.app/",
+      link: "https://ai-hubx.up.railway.app/aihub.ai",
     },
     {
       img: "/crypto-wallet.png",

@@ -12,7 +12,7 @@ export default function Home() {
     <motion.div
       initial={{ opacity: 0, y: 30, filter: "blur(8px)" }} // Start: Hidden, above, blurry
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }} // End: Visible, normal position, sharp
-      transition={{ duration: 0.5, ease: "easeOut" }} // Smooth transition
+      transition={{ duration: 0.8, ease: "easeOut" }} // Smooth transition
       className="m-6"
     >
       <div className="flex justify-center scroll-smooth items-center">
@@ -21,7 +21,7 @@ export default function Home() {
             initial={{ y: -200, opacity: 0, rotate: -10 }}
             animate={{ y: 0, opacity: 1, rotate: 0 }}
             transition={{
-              duration: 0.8,
+              duration: 0.9,
               type: "spring",
               stiffness: 100,
               damping: 10,

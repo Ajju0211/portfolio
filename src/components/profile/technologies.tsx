@@ -16,7 +16,6 @@ const techStack = [
   { name: "Docker", icon: <FaDocker /> },
   { name: "Java", icon: <FaJava /> },
   { name: "Python", icon: <FaPython /> },
-  { name: "C++", icon: <SiCplusplus /> },
   { name: "MySQL", icon: <SiMysql /> },
   { name: "PostgreSQL", icon: <SiPostgresql /> },
 ];

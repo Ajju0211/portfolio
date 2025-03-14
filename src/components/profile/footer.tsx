@@ -4,11 +4,7 @@ import { MdMarkEmailUnread } from "react-icons/md";
 import { IoLink } from "react-icons/io5";
 import { motion } from "framer-motion";
 const Footer = (): ReactElement => {
-  const [isSocialOpen, setIsSocialOpen] = useState(false);
 
-  const handleIsSocial = (): void => {
-    setIsSocialOpen((prev) => !prev);
-  };
   return (
     <section
       id="footer"
@@ -17,15 +13,7 @@ const Footer = (): ReactElement => {
       <div className="w-full flex gap-5 flex-col">
         <div className="border-b-[2px] w-full"></div>
         <div className="flex items-center justify-start gap-3 mb-10 w-full">
-          <div
-            onClick={handleIsSocial}
-            className="flex relative cursor-pointer hover:scale-110 items-center justify-center  gap-2 transition-all duration-300 ease-in-out "
-          >
-            <IoLink size={16} />
-            <span className="text-center text-[12px] uppercase">my social</span>
-          </div>
-
-          {isSocialOpen && (
+        
             <motion.div
               initial={{ opacity: 0, x: -20, filter: "" }} // Start: Hidden, above, blurry
               animate={{ opacity: 1, x: 0, filter: "blur(0px)" }} // End: Visible, normal position, sharp
@@ -57,7 +45,6 @@ const Footer = (): ReactElement => {
                 </div>
               </div>
             </motion.div>
-          )}
         </div>
       </div>
       <span></span>

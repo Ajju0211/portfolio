@@ -5,7 +5,7 @@ const projects = [
       title: "Chat Web App",
       description: "A real-time chat app with authentication.",
       techStack: ["React", "JavaScript", "Express", "Socket IO", "MongoDB", "WebRTC", "NodeJS"],
-      link: "https://full-stack-chat-website.onrender.com/login",
+      link: "https://ai-hubx.up.railway.app",
     },
     {
       img: "/AI-hubX.png",

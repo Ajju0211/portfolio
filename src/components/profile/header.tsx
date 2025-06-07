@@ -11,7 +11,7 @@ export default function Header() {
         </div>
         <div className="flex items-center justify-center gap-2">
          |
-          {/* <span className="uppercase cursor-pointer ">Project</span> */}
+          <span onClick={() => window.location.href = "https://www.canva.com/design/DAGot1I_b5s/psSshRZX_e6dam1SPIuq0g/view"} className="uppercase cursor-pointer ">Resume</span>
         </div>
       </div>
       <ModeToggle />

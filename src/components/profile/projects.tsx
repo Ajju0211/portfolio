@@ -1,5 +1,5 @@
 "use client";
-import projects from "./constance";
+import projects from "../../lib/constance";
 import { FaNodeJs, FaReact } from "react-icons/fa";
 import Image from 'next/image';
 import {

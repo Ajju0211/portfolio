@@ -5,7 +5,7 @@ export default function About(): ReactElement {
     <div className="flex  w-full items-center justify">
       <div className="flex flex-col items-start gap-2 justify-evenly">
         <span className="text-xl uppercase font-bold">About</span>
-        <p className="tracking-tight font-normal">
+        <p className="tracking-tight font-arial font-normal">
          Aspiring Software Engineer skilled in the MERN stack, React Native,
           and Next.js, with knowledge of Docker products. I enjoy solving
           real-world problems through technology and continuously learning new

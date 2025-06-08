@@ -16,7 +16,7 @@ export default function Home() {
       className="m-6"
     >
       <div className="flex justify-center scroll-smooth items-center">
-        <div className="flex flex-col  h-full w-[90%] sm:w-[680px] mt-10 gap-8 items-center justify-center">
+        <div className="flex flex-col  h-full w-[90%] sm:w-[640px]  gap-6 items-center justify-center">
           <motion.div
             initial={{ y: -200, opacity: 0, rotate: -10 }}
             animate={{ y: 0, opacity: 1, rotate: 0 }}

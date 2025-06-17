@@ -1,7 +1,9 @@
 "use client";
-import projects from "../../lib/constance";
+import { useEffect, useRef, useState } from "react";
+import { projects } from "../../lib/constance";
 import { FaNodeJs, FaReact } from "react-icons/fa";
-import Image from 'next/image';
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   SiMongodb,
   SiExpress,
@@ -13,96 +15,169 @@ import {
   SiOpenai,
 } from "react-icons/si";
 import { MdOutlineArrowOutward } from "react-icons/md";
+import { ReactElement } from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Menu, XIcon } from "lucide-react";
 
-// Map tech stack names to icons
 const techIcons: { [key: string]: ReactElement } = {
-  NodeJS: <FaNodeJs size={20} />,
-  React: <FaReact size={20} />,
-  MongoDB: <SiMongodb size={20} />,
-  Express: <SiExpress size={20} />,
-  EtherJS: <SiEthereum size={20} />,
-  JavaScript: <SiJavascript size={20} />,
-  CSS: <SiCss3 size={20} />,
-  "Socket IO": <SiSocketdotio size={20} />,
-  WebRTC: <SiWebrtc size={20} />,
-  API: <SiOpenai size={20} />,
-  ChatGPT: <SiOpenai size={20} />,
-  Deepseek: <SiOpenai size={20} />,
+  NodeJS: <FaNodeJs size={16} />,
+  React: <FaReact size={16} />,
+  MongoDB: <SiMongodb size={16} />,
+  Express: <SiExpress size={16} />,
+  EtherJS: <SiEthereum size={16} />,
+  JavaScript: <SiJavascript size={16} />,
+  CSS: <SiCss3 size={16} />,
+  "Socket IO": <SiSocketdotio size={16} />,
+  WebRTC: <SiWebrtc size={16} />,
+  API: <SiOpenai size={16} />,
+  Deepseek: <SiOpenai size={16} />,
 };
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { ReactElement } from "react";
+const allTechs = Array.from(
+  new Set(projects.flatMap((p) => p.techStack || []))
+);
 
 const ProjectList: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showTechFilter, setShowTechFilter] = useState(false);
+  const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
+  const filterRef = useRef<HTMLDivElement | null>(null);
+
   const handleRedirect = (link: string) => {
     window.open(link, "_blank");
   };
 
+  const handleTechToggle = (tech: string) => {
+    setSelectedTechs((prev) =>
+      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech]
+    );
+  };
+
+  const filteredProjects = projects.filter((project) => {
+    const search = searchTerm.toLowerCase();
+    const titleMatch = project.title.toLowerCase().includes(search);
+    const techMatch = project.techStack?.some((tech) =>
+      tech.toLowerCase().includes(search)
+    );
+    const searchMatch = titleMatch || techMatch;
+    const techFilterMatch =
+      selectedTechs.length === 0 ||
+      selectedTechs.every((selected) => project.techStack?.includes(selected));
+    return searchMatch && techFilterMatch;
+  });
+
+  // close filter menu when clicking outside
+
   return (
-    <div className="w-full flex flex-col items-start">
-      <span className="text-xl uppercase font-bold">projects</span>
-      <Carousel className="w-full cursor-pointer">
-        <CarouselContent className="p-3">
-          {projects.map((project, index) => (
-            <CarouselItem
+    <div className="w-full flex flex-col items-start justify-center  relative">
+      <h3 className="text-2xl md:text-2xl font-bold font-jakarta uppercase mb-2">
+        Projects
+      </h3>
+
+      <div className="flex flex-col sm:flex-row gap-2 justify-between items-center h-full w-full">
+        <Input
+          type="text"
+          placeholder="Search by title or tech (e.g. React, NodeJS)..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border-[#6d6d6d] w-full"
+        />
+
+        <Button
+          variant="outline"
+          onClick={() => setShowTechFilter((prev) => !prev)}
+          className="px-4 border-dashed border-gray-600 rounded-md hover:bg-gray-800 transition"
+        >
+          {!showTechFilter ? <Menu /> : <XIcon />}
+          {showTechFilter ? "Tech" : "Filters"}
+        </Button>
+      </div>
+
+      {/* Filter Dropdown */}
+      <AnimatePresence>
+        {showTechFilter && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+            transition={{ duration: 0.2 }}
+            ref={filterRef}
+            className="absolute top-[130px]  right-0 z-50 w-[160px]  bg-[#111] rounded-sm  border border-gray-700 shadow-md"
+          >
+            <div className="flex flex-col max-h-[300px] w-full overflow-auto">
+              {allTechs.map((tech) => (
+                <div key={tech} className="w-full">
+                  <label className="flex items-center pl p-2 hover:bg-gray-400 gap-6 w-full text-sm cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={selectedTechs.includes(tech)}
+                      onChange={() => handleTechToggle(tech)}
+                      className="accent-blue-500"
+                    />
+                    <span>{tech}</span>
+                  </label>
+                  <div className="border-b w-full border-[#c6c5c5]"></div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Project Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-7xl mt-6">
+        {filteredProjects.length > 0 ? (
+          filteredProjects.map((project, index) => (
+            <motion.div
+              layout
               key={index}
-              className="sm:basis-1/2  border-[1px] rounded-[12px] m-1 w-28 sm:w-40 h-90 p-3"
+              className="border border-gray-700 hover:shadow-xl transition-shadow rounded-xl p-3 flex flex-col gap-1"
             >
-              <div
-                className="h-full w-full flex overflow-hidden flex-col items-start rounded-[10px] justify-start"
-                onClick={() => {
-                  handleRedirect(project.link);
-                }}
-              >
+              <div className="w-full cursor-grab h-full overflow-hidden rounded-md">
                 <Image
                   src={project.img}
                   alt={project.title}
                   width={500}
-                  height={300}
-                  className="w-full h-50 object-cover transition-transform duration-300 hover:scale-102 rounded-[10px]"
+                  height={400}
+                  className="w-full h-full object-cover rounded-md transform transition-transform duration-300 hover:scale-105"
                 />
-                <div className="flex flex-col items-center justify-center w-full">
-                  <div className="flex w-full justify-between items-center">
-                    <h2 className="text-md font-semibold mt-3">
-                      {project.title}{" "}
-                    </h2>
-                    <MdOutlineArrowOutward size={12} />
-                  </div>
-                  <p className="text-gray-300 w-full text-sm">
-                    {project.description}
-                  </p>
-
-                  {/* Tech Stack Icons */}
-                  <div className="flex w-full  mt-2 p-2 flex-wrap">
-                    {project.techStack && project.techStack.length > 0 ? (
-                      project.techStack.map((tech, idx) => (
-                        <span
-                          key={idx}
-                          className="flex items-center gap-1 text-sm border px-2 py-1 rounded-md"
-                        >
-                          {techIcons[tech] || tech}
-                        </span>
-                      ))
-                    ) : (
-                      <span className="text-gray-500">
-                        No Tech Stack Available
-                      </span>
-                    )}
-                  </div>
-                </div>
               </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
+
+              <div className="flex justify-between items-center w-full mt-2">
+                <h3 className="text-md font-semibold">{project.title}</h3>
+                <MdOutlineArrowOutward size={14} />
+              </div>
+              <p className="text-sm text-gray-400">{project.description}</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {project.techStack?.length > 0 ? (
+                  project.techStack.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="flex items-center gap-1 text-xs dark:text-gray-300 border border-gray-600 px-2 py-1 rounded-md"
+                    >
+                      {techIcons[tech] || tech}
+                      <span>{tech}</span>
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs dark:text-gray-500">
+                    No Tech Stack Available
+                  </span>
+                )}
+              </div>
+              <button
+                onClick={() => handleRedirect(project.link)}
+                className="cursor-pointer border-gray-800 px-4 py-2 mt-1 rounded-md border border-transparent hover:border-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 dark:hover:border-white/30 text-gray-800 dark:text-white transition duration-200"
+              >
+                Live Demo
+              </button>
+            </motion.div>
+          ))
+        ) : (
+          <p className="text-gray-400 text-sm mt-6">No projects found.</p>
+        )}
+      </div>
     </div>
   );
 };

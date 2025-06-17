@@ -1,7 +1,8 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 
-/* Your CSS code here */
 
 @plugin "tailwindcss-animate";
 
@@ -122,11 +123,46 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
+@keyframes spinProgress {
+  0% {
+    transform: rotate(0deg);
   }
-  body {
-    @apply bg-background text-foreground;
+  100% {
+    transform: rotate(360deg);
   }
+}
+
+.before\\:animate-spin-progress::before {
+  animation: spinProgress 2s linear forwards;
+  transform-origin: center;
+}
+
+@keyframes shineLine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.shine-line {
+  animation: shineLine 2s linear infinite;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+@keyframes spinAroundCorner {
+  0% {
+    transform: rotate(0deg) translateX(10px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(10px) rotate(-360deg);
+  }
+}
+
+.spinner-dot {
+  animation: spinAroundCorner 1.2s linear infinite;
+  transform-origin: center center;
 }

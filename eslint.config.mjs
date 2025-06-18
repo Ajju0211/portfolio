@@ -14,6 +14,8 @@ const eslintConfig = [
   {
     rules: {
       "@typescript-eslint/no-unused-vars": "off",
+      "eslint-disable-next-line @typescript-eslint/no-explicit-any",
+
     },
   },
 ];

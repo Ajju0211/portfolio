@@ -55,10 +55,10 @@ export const Cover = ({
           >
             <motion.div
               animate={{
-                translateX: ["-50%", "0%"],
+                targetX: ["-50%", "0%"],
               }}
               transition={{
-                translateX: {
+                targetY: {
                   duration: 10,
                   ease: "linear",
                   repeat: Infinity,

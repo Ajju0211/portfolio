@@ -1,7 +1,7 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import { FaGithubSquare, FaLinkedin } from "react-icons/fa";
 import { MdMarkEmailUnread } from "react-icons/md";
-import { IoLink } from "react-icons/io5";
+
 import { motion } from "framer-motion";
 const Footer = (): ReactElement => {
 

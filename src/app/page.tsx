@@ -1,9 +1,9 @@
 "use client";
-import { motion, useScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import Hero from "@/components/profile/hero/hero";
 import Header from "@/components/profile/header";
 import ExperienceCard from "@/components/profile/experience";
-import About from "@/components/profile/about";
+
 import ProjectList from "@/components/profile/projects";
 import Technologies from "@/components/profile/technologies";
 import Education from "@/components/profile/education";

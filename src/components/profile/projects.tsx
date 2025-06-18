@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import { projects } from "../../lib/constance";
 import { FaNodeJs, FaReact } from "react-icons/fa";
 import Image from "next/image";

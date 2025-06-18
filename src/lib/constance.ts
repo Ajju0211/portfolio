@@ -1,9 +1,9 @@
 export const projects = [
   {
     img: "/AI-hubX.png",
-    title: "AI-HubX",
-    description: "An AI-powered platform for text-to-image.",
-    techStack: ["React", "MongoDB", "Express", "NodeJS"],
+    title: "AI-HubX (SAAS)",
+    description: "An AI-powered SAAS web-application .",
+    techStack: ["React", "MongoDB", "Express", "NodeJS", "Socket IO"],
     link: "https://ai-hub-x.vercel.app/login",
   },
   {

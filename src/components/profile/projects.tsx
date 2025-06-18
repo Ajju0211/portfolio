@@ -103,7 +103,7 @@ const ProjectList: React.FC = () => {
             exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={{ duration: 0.2 }}
             ref={filterRef}
-            className="absolute top-[130px]  right-0 z-50 w-[160px]  bg-[#111] rounded-sm  border border-gray-700 shadow-md"
+            className="absolute top-[80px]  right-0 z-50 w-[160px]  bg-[#111] rounded-sm  border border-gray-700 shadow-md"
           >
             <div className="flex flex-col max-h-[300px] w-full overflow-auto">
               {allTechs.map((tech) => (
@@ -132,7 +132,7 @@ const ProjectList: React.FC = () => {
             <motion.div
               layout
               key={index}
-              className="border border-gray-700 hover:shadow-xl transition-shadow rounded-xl p-3 flex flex-col gap-1"
+              className="border border-gray-700 hover:shadow-xl transition-shadow rounded-xl p-3 gap-2 flex flex-col"
             >
               <div className="w-full cursor-grab h-full overflow-hidden rounded-md">
                 <Image
@@ -168,7 +168,7 @@ const ProjectList: React.FC = () => {
               </div>
               <button
                 onClick={() => handleRedirect(project.link)}
-                className="cursor-pointer border-gray-800 px-4 py-2 mt-1 rounded-md border border-transparent hover:border-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 dark:hover:border-white/30 text-gray-800 dark:text-white transition duration-200"
+                className="cursor-pointer border-gray-400 px-4 py-2 mt-1 rounded-md border hover:border-gray-400 hover:bg-gray-100 dark:hover:bg-white/10 dark:hover:border-white/30 text-gray-800 dark:text-white transition duration-200"
               >
                 Live Demo
               </button>

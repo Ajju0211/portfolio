@@ -70,7 +70,6 @@ export function useScrollReveal({
     }, el);
 
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yOffset, xOffset, duration, delay, stagger, opacity, ease, start, children]);
 
   return ref;

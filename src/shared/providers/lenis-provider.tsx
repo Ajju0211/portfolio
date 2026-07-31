@@ -9,16 +9,16 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import Lenis from "@studio-freight/lenis";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import Lenis from "@studio-freight/lenis";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
  * Initializes Lenis smooth scrolling and syncs it with GSAP.
  * Configured for a snappy, professional, Awwwards-style feel.
  */
 export function LenisProvider({ children }: { children: React.ReactNode }) {
-  const lenisRef = useRef<Lenis | null>(null);
+  // const lenisRef = useRef<Lenis | null>(null);
 
   // useEffect(() => {
   //   // 1. Register GSAP Plugin

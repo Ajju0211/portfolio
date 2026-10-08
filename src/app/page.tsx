@@ -7,9 +7,9 @@ import { Technologies } from "@/domains/about/components/Technologies";
 import { About } from "@/domains/about/components/About";
 import { Contact } from "@/domains/contact/components/Contact";
 
+
 export default function Home() {
   return (
-
     <main style={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <Hero />
       <div style={{ width: "100%", height: "1px", background: "linear-gradient(90deg, transparent, var(--border), transparent)" }} />

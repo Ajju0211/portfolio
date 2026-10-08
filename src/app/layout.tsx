@@ -6,6 +6,8 @@ import { Toaster } from "sonner";
 import { siteConfig } from "@/shared/config/site";
 import { Header } from "@/shared/ui/Header";
 import { Footer } from "@/shared/ui/Footer";
+import { AISidebar } from "@/shared/ui/AISidebar";
+import { BreakpointProvider } from "@/shared/hooks/useContainerBreakpoint";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -93,12 +95,15 @@ export default function RootLayout({
 
         {/* Decorative noise layer */}
         <div className="noise-overlay" aria-hidden="true" />
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <Header />
-          {children}
-          <Footer />
-          <Toaster richColors position="bottom-right" />
-        </ThemeProvider>
+        <BreakpointProvider style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <Header />
+            {children}
+            <Footer />
+            <AISidebar />
+            <Toaster richColors position="bottom-right" />
+          </ThemeProvider>
+        </BreakpointProvider>
       </body>
     </html>
   );

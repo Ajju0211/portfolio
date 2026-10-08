@@ -14,27 +14,6 @@ export const About: React.FC = () => {
         <SectionHeader 
           label="04" 
           title="About" 
-          action={
-            <a 
-              href={PERSONAL_INFO.resume} 
-              target="_blank" 
-              rel="noreferrer"
-              style={{ 
-                display: "flex", 
-                alignItems: "center", 
-                gap: "4px", 
-                fontSize: "0.9rem", 
-                fontWeight: 600, 
-                color: "var(--muted-foreground)",
-                textDecoration: "none",
-                transition: "color 0.2s"
-              }}
-              onMouseEnter={e => e.currentTarget.style.color = "var(--foreground)"}
-              onMouseLeave={e => e.currentTarget.style.color = "var(--muted-foreground)"}
-            >
-              More <ArrowRight size={16} />
-            </a>
-          }
         />
 
         {/* Content Grid */}

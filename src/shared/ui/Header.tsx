@@ -4,8 +4,10 @@ import { NAVIGATION_LINKS, PERSONAL_INFO } from "@/shared/data";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ModeToggle } from "./ModeToggle";
+import { useContainerBreakpoint } from "@/shared/hooks/useContainerBreakpoint";
 
 export function Header() {
+  const { isMd } = useContainerBreakpoint();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -21,18 +23,20 @@ export function Header() {
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
+        className={`transition-all duration-300 ${scrolled ? "border-b border-border dark:border-[#e5e7eb]/10" : "border-b border-transparent"}`}
         style={{
           position: "fixed",
-          top: 0, left: 0, right: 0,
+          top: 0, left: 0, 
+          right: "var(--ai-sidebar-width, 0px)",
           zIndex: 50,
-          transition: "padding 0.4s ease, background-color 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease",
-          padding: scrolled ? "12px 0" : "24px 0",
+          height: "72px",
+          display: "flex",
+          alignItems: "center",
           backgroundColor: scrolled ? "color-mix(in srgb, var(--background) 85%, transparent)" : "transparent",
           backdropFilter: scrolled ? "blur(20px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
         }}
       >
-        <div className="mx-auto flex items-center justify-between px-6 md:grid md:grid-cols-[1fr_auto_1fr] max-w-[1000px] w-full">
+        <div className={`mx-auto px-6 max-w-[1000px] w-full ${isMd ? "grid grid-cols-[1fr_auto_1fr] items-center" : "flex items-center justify-between"}`}>
           {/* Logo */}
           <div className="flex justify-start">
             <a href="#hero" style={{ textDecoration: "none" }}>
@@ -53,7 +57,7 @@ export function Header() {
           {/* Desktop nav */}
           <nav
             style={{ gap: "32px" }}
-            className="hidden md:flex items-center justify-center"
+            className={`${isMd ? "flex" : "hidden"} items-center justify-center`}
           >
             {NAVIGATION_LINKS.map((link) => (
               <a
@@ -78,7 +82,7 @@ export function Header() {
           </nav>
 
           {/* Desktop Right (Get in touch) */}
-          <div className="hidden md:flex items-center gap-4 justify-end">
+          <div className={`${isMd ? "flex" : "hidden"} items-center gap-4 justify-end`}>
             <ModeToggle />
             <a
               href="#contact"
@@ -102,7 +106,7 @@ export function Header() {
           </div>
 
           {/* Mobile buttons */}
-          <div className="flex items-center gap-3 md:hidden justify-end">
+          <div className={`${isMd ? "hidden" : "flex"} items-center gap-3 justify-end`}>
             <ModeToggle />
             <button
               aria-label="Toggle menu"
@@ -132,7 +136,10 @@ export function Header() {
             transition={{ type: "tween", duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             style={{
               position: "fixed",
-              inset: 0,
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: "var(--ai-sidebar-width, 0px)",
               zIndex: 40,
               backgroundColor: "var(--background)",
               display: "flex",

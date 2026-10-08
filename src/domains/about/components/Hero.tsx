@@ -11,8 +11,11 @@ import React from "react";
 import { PERSONAL_INFO, SOCIAL_LINKS } from "@/shared/data";
 import { motion } from "framer-motion";
 import { Mail, Phone, FileText, Send } from "lucide-react";
+import { useContainerBreakpoint } from "@/shared/hooks/useContainerBreakpoint";
 
 export const Hero: React.FC = () => {
+  const { isMd } = useContainerBreakpoint();
+
   return (
     <section
       id="hero"
@@ -230,7 +233,7 @@ export const Hero: React.FC = () => {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
             }}
-            className="grid grid-cols-2 md:grid-cols-[repeat(4,minmax(max-content,1fr))]  rounded-2xl border dark:border-[#e5e7eb]/10 mb-4 bg-transparent overflow-hidden"
+            className={`grid ${isMd ? "grid-cols-[repeat(4,minmax(max-content,1fr))]" : "grid-cols-2"} rounded-2xl border dark:border-[#e5e7eb]/10 mb-4 bg-transparent overflow-hidden`}
           >
             {[
               {
@@ -257,9 +260,7 @@ export const Hero: React.FC = () => {
             ].map((stat, idx) => (
               <div
                 key={stat.label}
-                className={`p-4 dark:border-[#e5e7eb]/10 md:px-5 md:py-4 flex flex-col justify-center min-w-0 ${idx !== 3 ? "border-b md:border-b-0 border-border" : ""
-                  } ${idx % 2 === 0 ? "border-r md:border-r" : "md:border-r"
-                  } ${idx === 3 ? "border-none" : ""}`}
+                className={`p-4 dark:border-[#e5e7eb]/10 ${isMd ? "px-5 py-4" : ""} flex flex-col justify-center min-w-0 ${idx !== 3 ? (isMd ? "border-b-0 border-border" : "border-b border-border") : ""} ${idx % 2 === 0 ? "border-r" : (isMd ? "border-r" : "")} ${idx === 3 ? "border-none" : ""}`}
                 style={{ height: "100%" }}
               >
                 <p style={{
@@ -273,7 +274,7 @@ export const Hero: React.FC = () => {
                 }}>
                   {stat.label}
                 </p>
-                <p className="whitespace-normal md:whitespace-nowrap" style={{
+                <p className={isMd ? "whitespace-nowrap" : "whitespace-normal"} style={{
                   fontFamily: "var(--font-sans)",
                   fontSize: "1.15rem",
                   fontWeight: 700,
@@ -300,7 +301,7 @@ export const Hero: React.FC = () => {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
             }}
-            className="flex flex-col dark:border-[#e5e7eb]/10 md:grid md:grid-cols-4 border border-border rounded-2xl bg-transparent overflow-hidden"
+            className={`dark:border-[#e5e7eb]/10 border border-border rounded-2xl bg-transparent overflow-hidden ${isMd ? "grid grid-cols-4" : "flex flex-col"}`}
           >
             {[
               {
@@ -327,7 +328,7 @@ export const Hero: React.FC = () => {
             ].map((item, idx) => (
               <div
                 key={item.text}
-                className={`flex dark:border-[#e5e7eb]/10 items-center min-w-0 ${item.isHeader ? 'gap-4 p-4 md:px-5 md:py-3' : 'gap-3 px-4 pb-4 md:p-0 md:px-5 md:py-3'}`}
+                className={`flex dark:border-[#e5e7eb]/10 items-center min-w-0 ${item.isHeader ? (isMd ? "gap-4 p-4 px-5 py-3" : "gap-4 p-4") : (isMd ? "gap-3 px-5 py-3" : "gap-3 px-4 pb-4")}`}
                 style={{ height: "100%" }}
               >
                 {item.isHeader ? (
@@ -335,7 +336,7 @@ export const Hero: React.FC = () => {
                     <span className="flex dark:border-[#e5e7eb]/10 items-center justify-center min-w-[40px] w-10 h-10 border border-border rounded-xl bg-transparent text-foreground">
                       {item.icon}
                     </span>
-                    <span className="whitespace-normal md:whitespace-nowrap" style={{
+                    <span className={isMd ? "whitespace-nowrap" : "whitespace-normal"} style={{
                       fontFamily: "var(--font-display)",
                       fontSize: "0.75rem",
                       fontWeight: 700,
@@ -351,7 +352,7 @@ export const Hero: React.FC = () => {
                     href={item.href}
                     target={item.target}
                     rel={item.target ? "noreferrer" : undefined}
-                    className="whitespace-normal md:whitespace-nowrap"
+                    className={isMd ? "whitespace-nowrap" : "whitespace-normal"}
                     style={{
                       display: "flex",
                       alignItems: "center",

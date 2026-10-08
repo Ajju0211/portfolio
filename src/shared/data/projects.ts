@@ -14,11 +14,11 @@ export const projects = [
   {
     img: "/skipthemap.avif",
     title: "Skip the map",
-    description: "Map-based property search and recommendation engine.",
+    description: "A tour and travel company featuring an AI-powered 'feeling engine'.",
     bullets: [
-      "Built geospatial search with interactive maps for destination discovery.",
-      "Developed a RAG-based recommendation engine using vector search and semantic retrieval.",
-      "Optimized query response times and data rendering for seamless user experience."
+      "Built a 'feeling engine' where users explain their current mood and AI recommends the perfect location to visit.",
+      "Developed geospatial search with interactive maps for dynamic destination discovery.",
+      "Optimized the RAG-based recommendation engine for fast and highly accurate semantic retrieval."
     ],
     techStack: ["Next", "Postgresql", "Strapi", "Vector Search"],
     link: "https://skipthemap.com/",
@@ -26,11 +26,11 @@ export const projects = [
   {
     img: "/clipkaro.avif",
     title: "ClipKaro",
-    description: "High-throughput video processing and creator platform.",
+    description: "A platform empowering small influencers to earn money through brand campaigns.",
     bullets: [
-      "Automated creator onboarding, analytics sync, and content verification.",
-      "Integrated Facebook, Instagram, YouTube, and Google Drive APIs with cron schedulers.",
-      "Implemented Redis-backed background workers for high-performance job processing."
+      "Engineered a platform where micro-influencers can participate in campaigns and monetize their reach.",
+      "Built integrations to fetch analytics directly from social media APIs without storing actual video files.",
+      "Integrated Facebook, Instagram, YouTube, and Google Drive APIs with cron schedulers and background workers."
     ],
     techStack: ["Next", "MongoDB", "Nest", "NodeJS", "Redis", "BullMQ"],
     link: "https://clipkaro.in/",

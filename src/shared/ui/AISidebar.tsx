@@ -292,7 +292,18 @@ export const AISidebar = () => {
                         body: JSON.stringify({ messages: apiMessages })
                       });
 
-                      const data = await res.json();
+                      let data;
+                      const textData = await res.text();
+                      try {
+                        data = JSON.parse(textData);
+                      } catch (e) {
+                        throw new Error(`Vercel Server Error: ${res.status} ${textData.slice(0, 100)}...`);
+                      }
+
+                      if (!res.ok) {
+                        throw new Error(data.reply || data.error || `Server error: ${res.status}`);
+                      }
+
                       const fullReply = data.reply || "Sorry, I couldn't process that.";
 
                       // Ensure the typing animation shows for at least 1.2 seconds so the user can clearly see it
@@ -325,13 +336,13 @@ export const AISidebar = () => {
                         }
                       }, 15);
 
-                    } catch (error) {
+                    } catch (error: any) {
                       console.error(error);
                       setIsTyping(false);
                       setMessages((prev) => [...prev, {
                         id: (Date.now() + 1).toString(),
                         role: "ai",
-                        content: "Something went wrong! Make sure your OPENROUTER_API_KEY is configured in the backend."
+                        content: `Error: ${error.message || "Something went wrong!"}`
                       }]);
                     }
                   }}

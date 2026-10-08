@@ -10,7 +10,8 @@
 import React from "react";
 import { PERSONAL_INFO, SOCIAL_LINKS } from "@/shared/data";
 import { motion } from "framer-motion";
-import { Mail, Phone, FileText, Send } from "lucide-react";
+import { Mail, Phone, FileText, Send, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { useContainerBreakpoint } from "@/shared/hooks/useContainerBreakpoint";
 
 export const Hero: React.FC = () => {
@@ -48,6 +49,20 @@ export const Hero: React.FC = () => {
             visible: { transition: { staggerChildren: 0.1 } }
           }}
         >
+          {/* Eyebrow / Current Role */}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+            }}
+            className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm text-primary"
+          >
+            <Sparkles size={14} className="text-primary" />
+            <span className="text-sm font-semibold">
+              {PERSONAL_INFO.currentRole}
+            </span>
+          </motion.div>
+
           {/* Headline */}
           <motion.h1
             variants={{
@@ -142,10 +157,8 @@ export const Hero: React.FC = () => {
             </a>
 
             {/* Secondary CTAs */}
-            <a
+            <Link
               href={PERSONAL_INFO.resume}
-              target="_blank"
-              rel="noreferrer"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -164,7 +177,7 @@ export const Hero: React.FC = () => {
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
               Resume
-            </a>
+            </Link>
 
             <a
               href="#contact"
@@ -310,20 +323,19 @@ export const Hero: React.FC = () => {
                 text: "Contact",
               },
               {
-                icon: <Mail size={18} color="var(--muted-foreground)" />,
+                icon: <Mail size={18} />,
                 text: PERSONAL_INFO.email,
                 href: `mailto:${PERSONAL_INFO.email}`,
               },
               {
-                icon: <Phone size={18} color="var(--muted-foreground)" />,
+                icon: <Phone size={18} />,
                 text: PERSONAL_INFO.phone,
                 href: `tel:${PERSONAL_INFO.phone}`,
               },
               {
-                icon: <FileText size={18} color="var(--muted-foreground)" />,
+                icon: <FileText size={18} />,
                 text: "Resume",
                 href: PERSONAL_INFO.resume,
-                target: "_blank",
               },
             ].map((item, idx) => (
               <div
@@ -347,18 +359,29 @@ export const Hero: React.FC = () => {
                       {item.text}
                     </span>
                   </>
-                ) : (
-                  <a
-                    href={item.href}
-                    target={item.target}
-                    rel={item.target ? "noreferrer" : undefined}
-                    className={isMd ? "whitespace-nowrap" : "whitespace-normal"}
+                ) : item.text === "Resume" ? (
+                  <Link
+                    href={item.href || "#"}
+                    className={`${isMd ? "whitespace-nowrap" : "whitespace-normal"} text-foreground opacity-80 hover:opacity-100 hover:underline transition-all duration-300`}
                     style={{
                       display: "flex",
                       alignItems: "center",
                       gap: "10px",
-                      color: "var(--foreground)",
-                      textDecoration: "none",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.95rem",
+                      fontWeight: 500
+                    }}
+                  >
+                    {item.icon} {item.text}
+                  </Link>
+                ) : (
+                  <a
+                    href={item.href}
+                    className={`${isMd ? "whitespace-nowrap" : "whitespace-normal"} text-foreground opacity-80 hover:opacity-100 hover:underline transition-all duration-300`}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
                       fontFamily: "var(--font-sans)",
                       fontSize: "0.95rem",
                       fontWeight: 500

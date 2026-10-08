@@ -29,7 +29,7 @@ export function Header() {
           top: 0, left: 0, 
           right: "var(--ai-sidebar-width, 0px)",
           zIndex: 50,
-          height: "72px",
+          height: scrolled ? "64px" : "96px",
           display: "flex",
           alignItems: "center",
           backgroundColor: scrolled ? "color-mix(in srgb, var(--background) 85%, transparent)" : "transparent",

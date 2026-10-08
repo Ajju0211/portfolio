@@ -16,8 +16,16 @@ export const AISidebar = () => {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const popupCount = useRef(0);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // Check initial state
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Tooltip animation & sound logic
   useEffect(() => {
@@ -135,7 +143,7 @@ export const AISidebar = () => {
 
             <button
               onClick={() => setIsOpen(true)}
-              className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-tr from-primary via-purple-500 to-blue-500 text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-300 relative group"
+              className="flex items-center justify-center w-14 h-14 rounded-full bg-foreground text-background shadow-lg shadow-foreground/10 hover:shadow-xl hover:shadow-foreground/20 hover:scale-105 transition-all duration-300 relative group"
               aria-label="Open AI Assistant"
             >
               <div className="absolute inset-0 rounded-full bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -161,32 +169,22 @@ export const AISidebar = () => {
             )}
 
             <motion.div
-              initial={isMobile ? { y: "100%" } : { x: "100%" }}
-              animate={isMobile ? { y: 0 } : { x: 0 }}
-              exit={isMobile ? { y: "100%" } : { x: "100%" }}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              drag={isMobile ? "y" : false}
-              dragConstraints={isMobile ? { top: 0, bottom: 500 } : undefined}
-              dragElastic={isMobile ? 0.2 : 0}
-              onDragEnd={handleDragEnd}
               style={{
                 width: isMobile ? "100%" : width,
-                height: isMobile ? "85vh" : "100vh",
+                height: "100dvh",
                 position: "fixed",
                 bottom: 0,
-                right: 0, // Align to right
-                top: isMobile ? "auto" : 0,
+                right: 0,
+                top: 0,
                 zIndex: 100,
-                backgroundColor: isMobile ? "var(--card)" : "var(--background)",
+                backgroundColor: "var(--background)",
               }}
-              className="border-l border-t md:border-t-0 border-border dark:border-[#e5e7eb]/10 flex flex-col rounded-t-3xl md:rounded-none overflow-hidden"
+              className="border-l border-border dark:border-[#e5e7eb]/10 flex flex-col overflow-hidden"
             >
-              {/* Drag Handle for Mobile */}
-              {isMobile && (
-                <div className="w-full flex justify-center py-3 cursor-grab active:cursor-grabbing">
-                  <div className="w-12 h-1.5 bg-muted-foreground/30 rounded-full" />
-                </div>
-              )}
 
               {/* Desktop Resize Handle (Now on the left side of the right drawer) */}
               {!isMobile && (
@@ -204,8 +202,11 @@ export const AISidebar = () => {
 
               {/* Header */}
               <div
-                className="flex items-center justify-between px-6 border-b border-border dark:border-[#e5e7eb]/10"
-                style={{ height: "72px", minHeight: "72px" }}
+                className={`flex items-center justify-between px-6 transition-all duration-300 ${scrolled || isMobile ? "border-b border-border dark:border-[#e5e7eb]/10" : "border-b border-transparent"}`}
+                style={{ 
+                  height: isMobile ? "64px" : (scrolled ? "64px" : "96px"), 
+                  minHeight: isMobile ? "64px" : (scrolled ? "64px" : "96px")
+                }}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">

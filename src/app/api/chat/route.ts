@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { siteConfig } from "@/shared/config/site";
 
 const SYSTEM_PROMPT = `You are the official AI Assistant embedded in Ajay Singh's portfolio website. Your primary objective is to act as a knowledgeable, professional, and enthusiastic representative for Ajay, helping recruiters and clients understand his technical skills, projects, and work experience.
 
@@ -72,8 +73,8 @@ export async function POST(req: Request) {
       headers: {
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://ajaysingh.com", // Recommended for OpenRouter
-        "X-Title": "Ajay Singh Portfolio AI" // Recommended for OpenRouter dashboard tracking
+        "HTTP-Referer": siteConfig.url, // Dynamically pulls your actual domain!
+        "X-Title": siteConfig.name // Dynamically pulls your site name!
       },
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",

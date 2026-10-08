@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Inter } from "next/font/google";
+import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/shared/providers/theme-provider";
-import { LenisProvider } from "@/shared/providers/lenis-provider";
-import { CustomCursor } from "@/shared/ui/CustomCursor";
 import { Toaster } from "sonner";
 import { siteConfig } from "@/shared/config/site";
+import { Header } from "@/shared/ui/Header";
+import { Footer } from "@/shared/ui/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: "swap",
 });
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["Ajay Singh", "Full Stack Developer", "MERN Stack", "Next.js Developer", "React Developer", "Software Engineer Portfolio"],
+  keywords: ["Ajay Singh", "Software Engineer", "AI Engineer", "Next.js Developer", "React Developer", "Software Engineer Portfolio"],
   authors: [{ name: siteConfig.author, url: siteConfig.url }],
   creator: siteConfig.author,
   robots: {
@@ -57,18 +57,21 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     creator: "@ajaysingh", // User can update this
   },
+  icons: {
+    icon: "/icon.png", // Next.js will automatically serve this from the public folder
+  },
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // JSON-LD structured data for Google Search (Rich Snippets)
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: siteConfig.name,
     url: siteConfig.url,
-    jobTitle: "Full-Stack Engineer",
+    jobTitle: "Software Engineer",
     worksFor: {
       "@type": "Organization",
       name: "Freelance",
@@ -81,21 +84,20 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${inter.variable} font-sans antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${inter.variable} font-sans antialiased`}>
         {/* Inject JSON-LD Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        
+
         {/* Decorative noise layer */}
         <div className="noise-overlay" aria-hidden="true" />
-        <CustomCursor />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LenisProvider>
-            {children}
-            <Toaster richColors position="bottom-right" />
-          </LenisProvider>
+          <Header />
+          {children}
+          <Footer />
+          <Toaster richColors position="bottom-right" />
         </ThemeProvider>
       </body>
     </html>

@@ -13,69 +13,38 @@
 "use client";
 
 import React, { forwardRef } from "react";
+import { motion } from "framer-motion";
 
-// ─── Prop Interfaces ────────────────────────────────────────────────────────
-
-/** Props accepted by the SectionHeader component */
 interface SectionHeaderProps {
-  /** Small uppercase label above the main title (e.g. "Selected Work") */
-  label: string;
-  /** Primary section heading */
+  label: string; // Used for the number, e.g., "01"
   title: React.ReactNode;
-  /** Optional className for the wrapper div */
+  action?: React.ReactNode;
   className?: string;
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────
-
-/**
- * SectionHeader
- *
- * Renders a small coloured label + a large bold heading.
- * Uses `forwardRef` so that parent components (e.g. GSAP animations
- * driven by refs) can attach a ref to the root element directly.
- *
- * @example
- * ```tsx
- * const titleRef = useRef<HTMLDivElement>(null);
- * <SectionHeader ref={titleRef} label="Career" title="Experience" />
- * ```
- */
 const SectionHeader = forwardRef<HTMLDivElement, SectionHeaderProps>(
-  ({ label, title, className }, ref) => {
+  ({ label, title, action, className }, ref) => {
     return (
-      <div
+      <motion.div
         ref={ref}
         className={className}
-        style={{ marginBottom: "clamp(40px, 7vw, 80px)" }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          alignItems: "center",
+          marginBottom: "clamp(32px, 5vw, 48px)"
+        }}
       >
-        {/* Label — tiny uppercase, primary colour */}
-        <p
-          style={{
-            fontSize: "0.7rem",
-            textTransform: "uppercase",
-            letterSpacing: "0.18em",
-            color: "var(--primary)",
-            fontWeight: 600,
-            marginBottom: "12px",
-          }}
-        >
-          {label}
-        </p>
-
-        {/* Primary heading */}
-        <h2
-          style={{
-            fontSize: "clamp(2rem, 6vw, 4.5rem)",
-            fontWeight: 800,
-            letterSpacing: "-0.04em",
-            lineHeight: 1.05,
-            color: "var(--foreground)",
-          }}
-        >
-          {title}
-        </h2>
-      </div>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "12px" }}>
+          <span style={{ fontSize: "0.85rem", color: "var(--primary)", fontWeight: 600 }}>{label}</span>
+          <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 700, color: "var(--foreground)", letterSpacing: "-0.02em" }}>{title}</h2>
+        </div>
+        {action && <div>{action}</div>}
+      </motion.div>
     );
   }
 );

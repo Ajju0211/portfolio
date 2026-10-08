@@ -6,8 +6,8 @@
 
 export const siteConfig = {
   name: "Ajay Singh",
-  title: "Ajay Singh | Full-Stack Engineer",
-  description: "Portfolio of Ajay Singh — Full-Stack Engineer specialising in MERN, Next.js, and scalable backend systems.",
+  title: "Ajay Singh | Software Engineer",
+  description: "Portfolio of Ajay Singh — Software Engineer specialising in modern web technologies and scalable backend AI systems.",
   url: "https://portfolio-ajju0211s-projects.vercel.app",
   author: "Ajay Singh",
   links: {

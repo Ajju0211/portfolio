@@ -15,7 +15,7 @@ export function Footer() {
       padding: "36px 0",
     }}>
       <div style={{
-        maxWidth: "1280px",
+        maxWidth: "1000px",
         margin: "0 auto",
         padding: "0 24px",
         display: "flex",

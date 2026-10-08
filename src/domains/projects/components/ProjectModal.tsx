@@ -10,9 +10,9 @@
  */
 
 "use client";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Image from "next/image";
-import gsap from "gsap";
+import { motion } from "framer-motion";
 import { ExternalLink, X } from "lucide-react";
 import { Project } from "../types";
 import { useBodyScrollLock } from "@/shared/hooks/useBodyScrollLock";
@@ -23,56 +23,15 @@ interface ProjectModalProps {
   isClosing: boolean;
 }
 
-export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, isClosing }) => {
+export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
   useBodyScrollLock();
 
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  // Entrance Animation
-  useEffect(() => {
-    if (!overlayRef.current || !modalRef.current) return;
-    
-    const ctx = gsap.context(() => {
-      // Fade in background overlay
-      gsap.fromTo(
-        overlayRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3, ease: "power2.out" }
-      );
-
-      // Scale up and slide in modal box
-      gsap.fromTo(
-        modalRef.current,
-        { opacity: 0, scale: 0.94, y: 28 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "back.out(1.2)", delay: 0.1 }
-      );
-    });
-
-    return () => ctx.revert();
-  }, []);
-
-  // Exit Animation
-  useEffect(() => {
-    if (isClosing && overlayRef.current && modalRef.current) {
-      gsap.to(modalRef.current, {
-        opacity: 0,
-        scale: 0.96,
-        y: 20,
-        duration: 0.3,
-        ease: "power2.in",
-      });
-      gsap.to(overlayRef.current, {
-        opacity: 0,
-        duration: 0.4,
-        ease: "power2.in",
-      });
-    }
-  }, [isClosing]);
-
   return (
-    <div
-      ref={overlayRef}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
       onClick={onClose}
       style={{
         position: "fixed",
@@ -86,18 +45,22 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, is
         padding: "clamp(12px, 3vw, 32px)",
       }}
     >
-      <div
-        ref={modalRef}
-        onClick={(e) => e.stopPropagation()}
+      <motion.div
+        initial={{ y: 50, opacity: 0, scale: 0.95 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 50, opacity: 0, scale: 0.95 }}
+        transition={{ type: "spring", bounce: 0, duration: 0.5 }}
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         style={{
           position: "relative",
           background: "var(--card)",
           border: "1px solid var(--border)",
           borderRadius: "20px",
           width: "100%",
-          maxWidth: "900px",
-          maxHeight: "90vh",
+          maxWidth: "750px", // Reduced from 900px for a sleeker look
+          maxHeight: "85vh", // Prevent edge-to-edge vertical touching
           overflowY: "auto",
+          overscrollBehavior: "contain", // Prevent body scroll chaining
         }}
       >
         <button
@@ -111,19 +74,23 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, is
             width: 36,
             height: 36,
             borderRadius: "50%",
-            background: "var(--muted)",
-            border: "none",
-            color: "var(--foreground)",
+            background: "rgba(0,0,0,0.4)",
+            backdropFilter: "blur(4px)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            color: "#fff",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            transition: "background 0.2s"
           }}
+          onMouseEnter={e => e.currentTarget.style.background = "rgba(0,0,0,0.6)"}
+          onMouseLeave={e => e.currentTarget.style.background = "rgba(0,0,0,0.4)"}
         >
           <X size={16} />
         </button>
 
-        <div style={{ position: "relative", width: "100%", aspectRatio: "16/7", overflow: "hidden" }}>
+        <div style={{ position: "relative", width: "100%", aspectRatio: "21/9", overflow: "hidden" }}>
           <Image
             src={project.img}
             alt={project.title}
@@ -134,12 +101,12 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, is
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to bottom, transparent 40%, var(--card))",
+              background: "linear-gradient(to bottom, transparent 20%, var(--card))",
             }}
           />
         </div>
 
-        <div style={{ padding: "clamp(24px, 4vw, 48px)" }}>
+        <div style={{ padding: "0 clamp(24px, 4vw, 40px) clamp(32px, 4vw, 40px)" }}>
           <h2
             style={{
               fontSize: "clamp(1.4rem, 4vw, 2.4rem)",
@@ -162,11 +129,8 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, is
             }}
           >
             <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-              {[
-                { label: "The Problem", content: project.problem },
-                { label: "Architecture", content: project.architecture },
-              ].map(({ label, content }) => (
-                <div key={label}>
+              {project.bullets && project.bullets.length > 0 && (
+                <div>
                   <p
                     style={{
                       fontSize: "0.65rem",
@@ -174,55 +138,38 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, is
                       letterSpacing: "0.15em",
                       color: "var(--primary)",
                       fontWeight: 700,
-                      marginBottom: "8px",
+                      marginBottom: "12px",
                     }}
                   >
-                    {label}
+                    Key Details
                   </p>
-                  <p style={{ color: "var(--foreground)", lineHeight: 1.7, fontSize: "0.95rem" }}>
-                    {content}
-                  </p>
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      padding: 0,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "12px",
+                    }}
+                  >
+                    {project.bullets.map((bullet, i) => (
+                      <li key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                        <span
+                          style={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: "50%",
+                            background: "var(--primary)",
+                            flexShrink: 0,
+                            marginTop: "8px",
+                          }}
+                        />
+                        <span style={{ color: "var(--foreground)", lineHeight: 1.6, fontSize: "0.95rem" }}>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
-              <div>
-                <p
-                  style={{
-                    fontSize: "0.65rem",
-                    textTransform: "uppercase",
-                    letterSpacing: "0.15em",
-                    color: "var(--primary)",
-                    fontWeight: 700,
-                    marginBottom: "10px",
-                  }}
-                >
-                  Outcomes
-                </p>
-                <ul
-                  style={{
-                    listStyle: "none",
-                    padding: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                  }}
-                >
-                  {project.outcomes.map((outcome, i) => (
-                    <li key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
-                      <span
-                        style={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: "50%",
-                          background: "var(--primary)",
-                          flexShrink: 0,
-                          marginTop: "7px",
-                        }}
-                      />
-                      <span style={{ color: "var(--foreground)", lineHeight: 1.6 }}>{outcome}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              )}
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
@@ -284,7 +231,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose, is
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
